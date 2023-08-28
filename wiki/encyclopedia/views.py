@@ -31,5 +31,6 @@ def random_entry(request):
 
     return render(request, "encyclopedia/entry.html", {"content": util.get_entry(ran_entry), "title": ran_entry})
 
-def search(request, term):
-    return render(request, "encyclopedia/search.html", {"search_term": term})
+def search(request):
+    term = request.GET.get("q")
+    return render(request, "encyclopedia/search.html", {"term": term})

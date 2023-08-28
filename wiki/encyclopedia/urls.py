@@ -7,5 +7,5 @@ urlpatterns = [
     path("new_page", views.new_page, name="new_page"),
     path("entry/<str:name>", views.entry, name="entry"),
     path("random", views.random_entry, name="random"),
-    path("?q<str:term>", views.search, name="search")
+    path("search/<str:term>", views.search, name="search")
 ]

@@ -1,7 +1,9 @@
 {% extends "encyclopedia/layout.html" %}
 
-{% extends body %}
-    You searched for:
+{% block title %}
+    Search
+{% endblock %}
 
-    
-{% blockend %}
+{% block body %}
+    You searched for: {{search_term}}
+{% endblock %}

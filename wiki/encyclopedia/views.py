@@ -22,11 +22,9 @@ def edit(request, name):
     if request.method == 'POST':
         form = New_page_form(request.POST)
         form.fields["title"].required = False
-        pdb.set_trace()
         if form.is_valid():
-            title = name
             content = form.cleaned_data["content"]
-            util.save_entry(title, content)
+            util.save_entry(name, content)
         else:
             errors = form.errors
         return HttpResponseRedirect(reverse("entry", args=[name]))

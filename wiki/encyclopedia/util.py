@@ -1,4 +1,5 @@
 import re
+import pdb
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -11,6 +12,21 @@ def list_entries():
     _, filenames = default_storage.listdir("entries")
     return list(sorted(re.sub(r"\.md$", "", filename)
                 for filename in filenames if filename.endswith(".md")))
+
+def search_entries(term):
+    """
+    Returns a query if search term matches an entry, else it returns a 
+    list of entries that have the query as a substring.
+    """
+    
+    entries = list_entries()
+    search_result=[]
+
+    for entry in entries:
+        if re.search(term.upper(),entry.upper()):
+            search_result.append(entry)
+    
+    return search_result
 
 
 def save_entry(title, content):

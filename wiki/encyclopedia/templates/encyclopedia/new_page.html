@@ -5,5 +5,15 @@
 {% endblock %}
 
 {% block body %}
-    <textarea id="new_content" name="new_content" placeholder="Here you enter text for new entry"></textarea>
+    <form action="{% url 'new_page' %}">
+        <div calss="input-text">
+            <input type="text" placeholder="Enter title" name="title">
+        </div>
+        <div class="textarea">
+            <textarea id="new_content" name="new_content" placeholder="Here you enter text for new entry"></textarea>
+        </div>
+        <div>
+            <button type="submit" value="Submit">Submit</button>
+        </div>
+    </form>
 {% endblock %}

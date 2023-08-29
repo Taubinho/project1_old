@@ -5,13 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <form action="{% url 'new_page' %}">
-        <div calss="input-text">
-            <input type="text" placeholder="Enter title" name="title">
-        </div>
-        <div class="textarea">
-            <textarea id="new_content" name="new_content" placeholder="Here you enter text for new entry"></textarea>
-        </div>
+    <h1>New Entry:</h1>
+    <form action="{% url 'new_page' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
         <div>
             <button type="submit" value="Submit">Submit</button>
         </div>

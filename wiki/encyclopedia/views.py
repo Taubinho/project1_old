@@ -1,7 +1,12 @@
 import random
+import pdb
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django import forms
+
 
 
 from . import util
@@ -23,7 +28,23 @@ def entry(request, name):
 
 
 def new_page(request):
-    return render(request, "encyclopedia/new_page.html")
+
+    if request.method == "POST":
+
+        form = New_page_form(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+            content = form.cleaned_data["content"]
+
+            if util.get_entry(title):
+                return render(request, "encyclopedia/error.html", {"error": title})
+            
+            else:
+                util.save_entry(title, content)
+
+
+        return HttpResponseRedirect(reverse("index"))
+    return render(request, "encyclopedia/new_page.html", {"form": New_page_form()})
 
 def random_entry(request):
 
@@ -33,10 +54,15 @@ def random_entry(request):
 
 def search(request):
     term = request.GET.get("q")
-    results = util.search_entries(term)
 
     if util.get_entry(term):
         return render(request, "encyclopedia/entry.html", {"content": util.get_entry(term), "title": term})
     
+    results = util.search_entries(term)
+
     return render(request, "encyclopedia/search.html", {"term": term,
                                                         "results": results})
+
+class New_page_form(forms.Form):
+    title = forms.CharField(label="title")
+    content = forms.CharField(widget=forms.Textarea, label="content")

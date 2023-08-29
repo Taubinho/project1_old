@@ -6,4 +6,8 @@
 
 {% block body %}
     {{content|safe}}
+    <div class="linebreak"></div>
+    <form action="{% url 'edit' title %}">
+        <button type="submit" value="edit">EDIT</button>
+    </form>
 {% endblock %}

@@ -17,6 +17,28 @@ def index(request):
         "entries": util.list_entries()
     })
 
+def edit(request, name):
+
+    if request.method == 'POST':
+        form = New_page_form(request.POST)
+        form.fields["title"].required = False
+        pdb.set_trace()
+        if form.is_valid():
+            title = name
+            content = form.cleaned_data["content"]
+            util.save_entry(title, content)
+        else:
+            errors = form.errors
+        return HttpResponseRedirect(reverse("entry", args=[name]))
+
+    else:
+        content = util.get_entry(name)
+        initial_data = {"title":name, "content": content}
+        form = New_page_form(initial=initial_data)    
+        form.fields['title'].widget.attrs['disabled'] = True
+        return render(request, "encyclopedia/edit.html", {"form": form,
+                                                        "title": name})
+
 def entry(request, name):
 
     content = util.get_entry(name)

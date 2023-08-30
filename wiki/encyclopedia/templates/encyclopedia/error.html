@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    The page for {{error}} does not/already exists!
+    {% if not_found is not none %}
+        <p>The page for {{not_found}} does not exist.</p> 
+        <p><a href="{% url 'new_page' %}">Would you like to create it?</a></p>
+    {% else %}
+        <p>The page for <a href="{% url 'entry' error %}">{{error}}</a> already exists</p>
+    {% endif %}
 {% endblock %}

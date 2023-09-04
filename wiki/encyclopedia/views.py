@@ -133,7 +133,7 @@ def search(request):
 
     # if the search term returns a direct result we render the requested entry
     if util.get_entry(term):
-        return render(request, "encyclopedia/entry.html", {"content": util.get_entry(term), "title": term})
+        return render(request, "encyclopedia/entry.html", {"content": util.markdown_lite(util.get_entry(term)), "title": term})
     
     # if not then we use the search_entries function to return a list of all entries that have the query as substring
     results = util.search_entries(term)
@@ -149,4 +149,4 @@ input fields.
 """
 class New_page_form(forms.Form):
     title = forms.CharField(label="title")
-    content = forms.CharField(widget=forms.Textarea, label="content")
+    content = forms.CharField(widget=forms.Textarea(attrs={'rows':8, 'cols': 30}), label="content")

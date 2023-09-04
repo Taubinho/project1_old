@@ -74,7 +74,7 @@ def entry(request, name):
         return render(request, "encyclopedia/error.html", {"not_found": name})
     
     # else we render the desired entry
-    return render(request, "encyclopedia/entry.html", {"content": markdown(content), "title": name})
+    return render(request, "encyclopedia/entry.html", {"content": util.markdown_lite(content), "title": name})
 
 
 def new_page(request):
@@ -119,7 +119,7 @@ def random_entry(request):
 
     ran_entry = random.choice(util.list_entries())
 
-    return render(request, "encyclopedia/entry.html", {"content": markdown(util.get_entry(ran_entry)), "title": ran_entry})
+    return render(request, "encyclopedia/entry.html", {"content": util.markdown_lite(util.get_entry(ran_entry)), "title": ran_entry})
 
 def search(request):
     """
